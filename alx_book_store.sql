@@ -1,40 +1,47 @@
-CREATE DATABASE alx_book_store;
+-- Create the database
+CREATE DATABASE IF NOT EXISTS alx_book_store;
 
+-- Use the database
 USE alx_book_store;
 
-CREATE TABLE Books(
-    book_id (Primary Key),
-    title VARCHAR(130),
-    author_id (Foreign Key referencing Authors table),
+-- Create Authors table first because Books references it
+CREATE TABLE Authors (
+    author_id INT PRIMARY KEY AUTO_INCREMENT,
+    author_name VARCHAR(215) NOT NULL
+);
+
+-- Create Books table
+CREATE TABLE Books (
+    book_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(130) NOT NULL,
+    author_id INT,
     price DOUBLE,
-    publication_date DATE
-
+    publication_date DATE,
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id)
 );
 
-CREATE TABLE Authors(
-    author_id (Primary Key),
-    author_name VARCHAR(215)
-);
-
-CREATE TABLE Customers(
-    
-    customer_id (Primary Key),
-    customer_name VARCHAR(215),
+-- Create Customers table
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_name VARCHAR(215) NOT NULL,
     email VARCHAR(215),
     customer_address TEXT
 );
 
-CREATE  TABLE Orders(
-    
-    order_id (Primary Key),
-    customer_id (Foreign Key referencing Customers table),
-    order_date DATE
+-- Create Orders table
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
 );
 
-CREATE TABLE Order_Details(
-    
-    orderdetailid (Primary Key)
-    order_id (Foreign Key referencing Orders table)
-    book_id (Foreign Key referencing Books table)
-    quantity DOUBLE
+-- Create Order_Details table
+CREATE TABLE Order_Details (
+    orderdetail_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    book_id INT,
+    quantity DOUBLE,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
 );
