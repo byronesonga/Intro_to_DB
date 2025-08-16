@@ -7,11 +7,12 @@ try:
             host="localhost",
             user="root",
             password="songa1936",
+
             )
        if mydb.is_connected():
           mycursor = mydb.cursor()
           # Execute SQL statements using the execute() method on the cursor
-          mycursor.execute("CREATE DATABASE IF NOT  EXISTS  alx_book_store")
+          mycursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
           print("Database 'alx_book_store' created successfully!")
           # Close connection to the databasse  
           mycursor.close()
